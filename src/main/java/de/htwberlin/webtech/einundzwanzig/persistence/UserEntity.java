@@ -1,7 +1,16 @@
-package de.htwberlin.webtech.einundzwanzig.web.api;
+package de.htwberlin.webtech.einundzwanzig.persistence;
 
-public class User {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity(name = "users")
+public class UserEntity {
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String username;
     private String email;
@@ -10,8 +19,7 @@ public class User {
     private int losses;
     private int draws;
 
-    public User(long id, String username, String email, int coins, int wins, int losses, int draws) {
-        this.id = id;
+    public UserEntity(String username,String email, int coins, int wins, int losses, int draws) {
         this.username = username;
         this.email = email;
         this.coins = coins;
@@ -20,24 +28,11 @@ public class User {
         this.draws = draws;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", coins=" + coins +
-                ", wins=" + wins +
-                ", losses=" + losses +
-                ", draws=" + draws +
-                '}';
+    protected UserEntity() {
     }
 
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getUsername() {
