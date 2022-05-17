@@ -2,7 +2,7 @@ package de.htwberlin.webtech.einundzwanzig.web;
 
 import de.htwberlin.webtech.einundzwanzig.service.UserService;
 import de.htwberlin.webtech.einundzwanzig.web.api.User;
-import de.htwberlin.webtech.einundzwanzig.web.api.UserCreateRequest;
+import de.htwberlin.webtech.einundzwanzig.web.api.UserManipulationRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,7 +22,7 @@ public class UserRestController {
     }
 
     @GetMapping(path = "/")
-    public ModelAndView showHelloWorld(){
+    public ModelAndView showHelloWorld() {
         return new ModelAndView("index");
     }
 
@@ -32,15 +32,28 @@ public class UserRestController {
     }
 
     @GetMapping(path = "/api/v1/users/{id}")
-    public ResponseEntity<User> fetchUsersById(@PathVariable Long id){
+    public ResponseEntity<User> fetchUsersById(@PathVariable Long id) {
         var user = userService.findById(id);
-        return user != null? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
+        return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
     }
 
     @PostMapping(path = "/api/v1/users")
-    public ResponseEntity<Void> createUser(@RequestBody UserCreateRequest request) throws URISyntaxException {
+    public ResponseEntity<Void> createUser(@RequestBody UserManipulationRequest request) throws URISyntaxException {
         var user = userService.create(request);
         URI uri = new URI("/api/v1/users" + user.getId());
         return ResponseEntity.created(uri).build();
     }
+
+    @PutMapping(path = "/api/v1/users{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UserManipulationRequest request) {
+        var user = userService.update(id, request);
+        return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping(path = "/api/v1/users{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        boolean successful = userService.deleteById(id);
+        return successful ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+    }
+
 }
