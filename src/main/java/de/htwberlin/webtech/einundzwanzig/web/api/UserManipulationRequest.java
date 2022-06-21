@@ -8,13 +8,15 @@ public class UserManipulationRequest {
     private int losses;
     private int draws;
 
-    public UserManipulationRequest(long id, String username, int coins, int wins, int losses, int draws) {
+    public UserManipulationRequest(String username, int coins, int wins, int losses, int draws) {
         this.username = username;
         this.coins = coins;
         this.wins = wins;
         this.losses = losses;
         this.draws = draws;
     }
+
+    public UserManipulationRequest(){}
 
     public String getUsername() {
         return username;
