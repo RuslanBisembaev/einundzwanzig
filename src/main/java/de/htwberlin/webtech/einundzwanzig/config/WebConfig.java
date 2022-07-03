@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedMethods("*")
                 .allowedOrigins(
                         "http://localhost:3000",
-                        "https://einund20-frontend.herokuapp.com"
+                        "https://einund20.herokuapp.com"
                 );
     }
 }
